@@ -1,7 +1,18 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+html(ng-app='DataHunter')
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		
+		script(type='text/javascript', src='javascripts/angular.js')
+		script(type='text/javascript', src='javascripts/angular-route.min.js')
+		script(type='text/javascript', src='javascripts/angular-resource.min.js')		
+		script(type='text/javascript', src='javascripts/ui-utils.js')		
+		
+		script(type='text/javascript', src='/javascripts/dataHunter.js')
+		
+
+ 
+	body
+		block content
+	//- footer oi
