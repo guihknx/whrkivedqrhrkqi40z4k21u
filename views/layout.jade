@@ -3,9 +3,16 @@ html(ng-app='DataHunter')
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/style.css')
-		
-		
-
+		meta(property='og:locale', content='pt_BR')
+		meta(property='og:url', content='https://datahunter.herokuapp.com/')
+		meta(property='og:title', content='Consulta Experian Serasa grátis')
+		meta(property='og:site_name', content='DataHunter')
+		meta(property='og:description', content='Busca dados pessoais a partir de um id CPF')
+		meta(property='og:image', content='https://datahunter.herokuapp.com/images/Experian.gif')
+		meta(property='og:image:type', content='image/gif')
+		meta(property='og:image:width', content='800')
+		meta(property='og:image:height', content='600')
+		meta(property='og:type', content='website')
  
 	body
 		block content
