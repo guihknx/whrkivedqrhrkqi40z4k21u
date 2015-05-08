@@ -2,25 +2,16 @@ extends layout
 
 block content
 	div.main(ng-controller="MainCtrl as main")
-		div.search(ng-show="showSearch")
-			//- input(type="text", class="search-field", ng-change="()")
-			input(bse-input, submit-required="true", type="text", ui-mask="999.999.999-99", ng-model="searchField", value="{{searchQuery}}" ng-change="onChangeQuery(searchField)")
+		div.branding
+			h1 datahunter
+			small  Insert any CPF id bellow and wait...
+		div.search
+			input(bse-input, submit-required="true", type="text", ui-mask="999.999.999-99", ng-model="searchField")
 			p.info(ng-show="displayHelp") {{message}}
-			div.loading(ng-show="showLoading",ng-animate="{show: 'fadeIn', hide:'fadeOut'}")
-			//
-		div.request(ng-show="showCaptcha")
-			//- input(type="text", class="search-field", ng-change="()")
-			div(class="captcha")
-				img(src="{{captchaImage}}")
-			input(bse-input, type="text",  ng-model="captchaField", ng-change="onCaptchaKeyUp(captchaField)" value="{{captchaField}}")
-			p.info(ng-show="displayHelp", custom-html) {{message}}
-			button(ng-click="onRequestAcess()") get acess
-			//
-
+			div.loading(ng-show="showLoading", ng-animate="{show: 'fadeIn', hide:'fadeOut'}")
 
 		div.result
 			ul
 				li(class="key_item", ng-repeat="(key, value) in dataInfo")
 					span(class="item_key") {{key}}	
-					span(class="item_value") {{value}} 
-
+					span(class="item_value") {{value}}

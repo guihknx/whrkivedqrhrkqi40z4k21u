@@ -4,15 +4,11 @@ var favicon      = require('serve-favicon');
 var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
-var session      = require('express-session');
-var captcha      = require('./lib/captcha');
-var Canvas       = require('canvas');
 
 
 // routes
 var index = require('./routes/index');
 var data  = require('./routes/data');
-var auth  = require('./routes/auth');
 
 // libs
 var dataHunter = require('./lib/fetch');
@@ -32,15 +28,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'keyboard cat'
-}));
 
-
-app.use(/\/captcha\/([^\/]+)\/?/, captcha);
 app.use('/', index);
-app.get('/fetch/', data);
-app.post('/auth-session/', auth);
+app.use('/cpf', data);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
