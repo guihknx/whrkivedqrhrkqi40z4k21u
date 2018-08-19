@@ -1,26 +1,30 @@
-doctype html
-html(ng-app='DataHunter')
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/style.css')
-		meta(property='og:locale', content='pt_BR')
-		meta(property='og:url', content='https://datahunter.herokuapp.com/')
-		meta(property='og:title', content='Consulta Experian Serasa grátis')
-		meta(property='og:site_name', content='DataHunter')
-		meta(property='og:description', content='Busca dados pessoais a partir de um id CPF')
-		meta(property='og:image', content='https://datahunter.herokuapp.com/images/Experian.gif')
-		meta(property='og:image:type', content='image/gif')
-		meta(property='og:image:width', content='800')
-		meta(property='og:image:height', content='600')
-		meta(property='og:type', content='website')
- 
-	body
-		block content
-		script(type='text/javascript', src='javascripts/angular.js')
-		script(type='text/javascript', src='javascripts/DataHunt.js')
-	footer
-		ul		
-			li
-				a(href="https://bitbucket.org/guih/datahunt/", target="_blank") 
-					i.icon-git
-						span repository
+doctype html(lang='en')
+html(ng-app="DataHunter")
+  head
+      meta(charset='utf-8')
+      title= title
+      link(rel='stylesheet', href='/stylesheets/style.css')
+      meta(property='og:locale', content='pt_BR')
+      meta(property='og:url', content='https://datahunter.herokuapp.com/')
+      meta(property='og:title', content='Consulta Experian Serasa grátis')
+      meta(property='og:site_name', content='DataHunter')
+      meta(property='og:description', content='Busca dados pessoais a partir de um id CPF')
+      meta(property='og:image', content='https://datahunter.herokuapp.com/images/Experian.gif')
+      meta(property='og:image:type', content='image/gif')
+      meta(property='og:image:width', content='800')
+      meta(property='og:image:height', content='600')
+      meta(property='og:type', content='website')     
+      |     
+      meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+
+      link(href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons", rel="stylesheet")
+
+      // Bootstrap core CSS
+      link(href='css/bootstrap.min.css', rel='stylesheet')
+      // Custom styles for this template
+      link(href='css/style.css', rel='stylesheet')
+    body.bg-light
+      block content
+      script(type='text/javascript', src='javascripts/angular.js')
+      script(type='text/javascript', src='javascripts/DataHunt.js')   
+      

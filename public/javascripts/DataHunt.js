@@ -2394,7 +2394,7 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 
 		$scope.searchQuery = formatId(value)
 		$scope.dataInfo = [];
-
+		$scope.timex = new Date();
 
 		if( !pattern.test( $scope.searchQuery ) ) {
 
@@ -2418,14 +2418,43 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 				$scope.dataInfo    = data.data;
 				$scope.displayHelp = false;
 				$scope.message = "";   
+				
+				$scope.elapsed =  new Date() - $scope.timex;
 			},
 			function(errorPayload) {
-				$log.error('failure loading movie', errorPayload);
+				$log.error('failure loading', errorPayload);
 			});
 
 		}
 	})
 	
+	$scope.$watch('plateField', function(value){
+		$scope.timex = new Date();
+
+		if( value == undefined ) return;
+		
+			$scope.showLoading = true;
+			DataTransponder.fetchPlate($scope.plateField).then(function(data) { 
+				$scope.showLoading = false;
+				if( data.error ){
+					$scope.displayHelp = true;
+					$scope.message     = data.error;
+					if( data.error.level === 100){
+						$scope.message = data.error + '';
+					}
+					return false;
+				}   
+				$scope.displayHelp = false;
+				$scope.dataInfo    = data.data;
+				$scope.displayHelp = false;
+				$scope.message = "";   
+				
+				$scope.elapsed =  new Date() - $scope.timex;
+			},
+			function(errorPayload) {
+				$log.error('failure loading', errorPayload);
+			});
+	})	
 };angular
     .module('DataHunter')
     .service('DataTransponder', DataTransponder);
@@ -2434,6 +2463,7 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 function DataTransponder($http) {
 
     var queriedId = '';
+    var qPlate = '';
     var promise = {};
     var service = {
         fetch:function(id){
@@ -2441,12 +2471,23 @@ function DataTransponder($http) {
 	  		
             if( queriedId != id ){
                 queriedId = id;
-                promise = $http.get('cpf/' + id);
+                promise = $http.get('data/cpf/' + id);
                 return promise; 
             }else{
                 return promise;
             }
-	  	}
+	  	},
+        fetchPlate:function(plate){
+            
+            
+            if( qPlate != plate ){
+                qPlate = plate;
+                promise = $http.get('data/plate/' + plate);
+                return promise; 
+            }else{
+                return promise;
+            }
+        }        
     };
     return service;
 

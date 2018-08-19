@@ -1,20 +1,3 @@
-//- extends layout
-
-//- block content
-//-     div.main(ng-controller="MainCtrl as main")
-//-         div.branding
-//-             h1 datahunter
-//-             small  Insert any CPF id bellow and wait...
-//-         div.search
-//-             input(bse-input, submit-required="true", type="text", ui-mask="999.999.999-99", ng-model="searchField")
-//-             p.info(ng-show="displayHelp") {{message}}
-//-             div.loading(ng-show="showLoading", )
-
-//-         div.result
-//-             ul
-//-                 li(class="key_item", ng-repeat="(key, value) in dataInfo")
-//-                     span(class="item_key") {{key}}  
-//-                     span(class="item_value") {{value}}
 extends layout
 
 block content
@@ -37,41 +20,41 @@ block content
              
         main.container(ng-controller="MainCtrl as main")
           .d-field-people
-              h3 Insert target DOC below
-              input.form-control(ng-disabled="showLoading" ui-mask="999.999.999-99", ng-model="searchField")
+              h3 Insert target Plate below
+              input.form-control(ng-disabled="showLoading" ui-mask="AAA-9999", ng-model="plateField")
               p(ng-animate="{show: 'fadeIn', hide:'fadeOut'}", ng-show="showLoading")
                 img.l(src="images/load.svg")
-              //- div {{dataInfo}}
+              pre {{dataInfo}}
           hr
-          .d-flex.align-items-center.p-3.red.my-3.text-white-50.bg-purple.rounded.shadow-sm(ng-show="dataInfo.fieldXsFname == '' && !showLoading")
+          .d-flex.align-items-center.p-3.red.my-3.text-white-50.bg-purple.rounded.shadow-sm(ng-show="dataInfo.error && !showLoading")
             <i class="material-icons">close</i>
             .lh-100
-              h6.mb-0.text-white.lh-100 People not found!         
+              h6.mb-0.text-white.lh-100 Car not found!         
               small Took {{elapsed}}ms to processs
-          div.role(ng-show="dataInfo.fieldXsFname.length > 0 && dataInfo.fieldXsFname != '' && !showLoading")
+          div.role(ng-show="dataInfo.chassi.length > 0 && dataInfo.chassi != '' && !showLoading")
             .d-flex.align-items-center.p-3.my-3.text-white-50.bg-purple.rounded.shadow-sm
               <i class="material-icons">done</i>       
               .lh-100
-                h6.mb-0.text-white.lh-100 People found!
+                h6.mb-0.text-white.lh-100 Car found!
                 small Took {{elapsed}}ms to processs
             .my-3.p-3.bg-white.rounded.shadow-sm
               h6.border-bottom.border-gray.pb-2.mb-0 Data resume       
               .media.text-muted.pt-3
-                <i class="material-icons">assignment_ind</i>       
+                <i class="material-icons">keyboard</i>       
                 p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
-                  strong.d-block.text-gray-dark DOC/CPF
-                  |{{dataInfo.fieldXsFcpf}}       
+                  strong.d-block.text-gray-dark PLATE
+                  |{{dataInfo.placa}}       
               .media.text-muted.pt-3
                 <i class="material-icons">done</i>   
                 |           
                 p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
-                  strong.d-block.text-gray-dark Name 
-                  | {{dataInfo.fieldXsFname}}       
+                  strong.d-block.text-gray-dark Model/Brand 
+                  | {{dataInfo.marca}}- {{dataInfo.modelo}}       
               .media.text-muted.pt-3
                 <i class="material-icons">face</i> 
                 p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
-                  strong.d-block.text-gray-dark Mother's name
-                  |   {{dataInfo.fieldXsFmname}}       
+                  strong.d-block.text-gray-dark ID
+                  |   {{dataInfo.chassi}}       
               small.d-block.text-right.mt-3
                 //- a(href='#') All updates
             .my-3.p-3.bg-white.rounded.shadow-sm
@@ -79,28 +62,33 @@ block content
               .media.text-muted.pt-3      
                 .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   .d-flex.justify-content-between.align-items-center.w-100
-                    strong.text-gray-dark Phone       
-                  span.d-block {{dataInfo.fieldXsFcphone}} {{dataInfo.fieldXsFphone}}  
+                    strong.text-gray-dark Model year/Build       
+                  span.d-block {{dataInfo.anoModelo}} - {{dataInfo.anoFabricacao}}  
               .media.text-muted.pt-3      
                 .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   .d-flex.justify-content-between.align-items-center.w-100
-                    strong.text-gray-dark City       
-                  span.d-block {{dataInfo.fieldXsFcity}} - {{dataInfo.fieldXsFstate}}
+                    strong.text-gray-dark Type       
+                  span.d-block {{dataInfo.tipoVeiculo}}
               .media.text-muted.pt-3      
                 .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   .d-flex.justify-content-between.align-items-center.w-100
                     strong.text-gray-dark Address line St       
-                  span.d-block {{dataInfo.fieldXsFaddr}}                
+                  span.d-block {{dataInfo.municipio}}       {{dataInfo.uf}}                
               .media.text-muted.pt-3      
                 .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   .d-flex.justify-content-between.align-items-center.w-100
-                    strong.text-gray-dark Postal code       
-                  span.d-block {{dataInfo.fieldXsFpcode}}   
+                    strong.text-gray-dark Engine ID       
+                  span.d-block {{dataInfo.motor}}   
               .media.text-muted.pt-3      
                 .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   .d-flex.justify-content-between.align-items-center.w-100
-                    strong.text-gray-dark DOB       
-                  span.d-block {{dataInfo.fieldXsFdob}}
+                    strong.text-gray-dark Color       
+                  span.d-block {{dataInfo.corVeiculo}}
+              .media.text-muted.pt-3      
+                .media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+                  .d-flex.justify-content-between.align-items-center.w-100
+                    strong.text-gray-dark Capacity       
+                  span.d-block {{dataInfo.potencia}} HP - {{dataInfo.cilindradas}} C³
               //- p.text-muted This report will be cached for performance in future requests **       
               small.d-block.text-right.mt-3
                 a(href='#') Know more

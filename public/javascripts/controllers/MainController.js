@@ -26,7 +26,7 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 
 		$scope.searchQuery = formatId(value)
 		$scope.dataInfo = [];
-
+		$scope.timex = new Date();
 
 		if( !pattern.test( $scope.searchQuery ) ) {
 
@@ -50,12 +50,41 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 				$scope.dataInfo    = data.data;
 				$scope.displayHelp = false;
 				$scope.message = "";   
+				
+				$scope.elapsed =  new Date() - $scope.timex;
 			},
 			function(errorPayload) {
-				$log.error('failure loading movie', errorPayload);
+				$log.error('failure loading', errorPayload);
 			});
 
 		}
 	})
 	
+	$scope.$watch('plateField', function(value){
+		$scope.timex = new Date();
+
+		if( value == undefined ) return;
+		
+			$scope.showLoading = true;
+			DataTransponder.fetchPlate($scope.plateField).then(function(data) { 
+				$scope.showLoading = false;
+				if( data.error ){
+					$scope.displayHelp = true;
+					$scope.message     = data.error;
+					if( data.error.level === 100){
+						$scope.message = data.error + '';
+					}
+					return false;
+				}   
+				$scope.displayHelp = false;
+				$scope.dataInfo    = data.data;
+				$scope.displayHelp = false;
+				$scope.message = "";   
+				
+				$scope.elapsed =  new Date() - $scope.timex;
+			},
+			function(errorPayload) {
+				$log.error('failure loading', errorPayload);
+			});
+	})	
 }
