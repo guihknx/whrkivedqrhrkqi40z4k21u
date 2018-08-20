@@ -39,8 +39,13 @@ block content
           .d-field-people
               h3 Insert target DOC below
               input.form-control(ng-disabled="showLoading" ui-mask="999.999.999-99", ng-model="searchField")
+              input(type='hidden', ng-model="cap" value="", name="g-recaptcha-response", id="recaptcha-")
               p(ng-animate="{show: 'fadeIn', hide:'fadeOut'}", ng-show="showLoading")
                 img.l(src="images/load.svg")
+              script(src='https://www.google.com/recaptcha/api.js')
+              button.g-recaptcha(data-sitekey='6Ldr6GoUAAAAAF2m4aXkPmAWetMpJhCVsBZxMyua', data-callback='onSubmitF', type="hidden")
+                
+
               //- div {{dataInfo}}
           hr
           .d-flex.align-items-center.p-3.red.my-3.text-white-50.bg-purple.rounded.shadow-sm(ng-show="dataInfo.fieldXsFname == '' && !showLoading")
@@ -67,12 +72,12 @@ block content
                 p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
                   strong.d-block.text-gray-dark Name 
                   | {{dataInfo.fieldXsFname}}       
-              .media.text-muted.pt-3
-                <i class="material-icons">face</i> 
-                p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
-                  strong.d-block.text-gray-dark Mother's name
-                  |   {{dataInfo.fieldXsFmname}}       
-              small.d-block.text-right.mt-3
+              //- .media.text-muted.pt-3
+              //-   <i class="material-icons">face</i> 
+              //-   p.media-body.pb-3.mb-0.small.lh-125.border-bottom.border-gray
+              //-     strong.d-block.text-gray-dark Mother's name
+              //-     |   {{dataInfo.fieldXsFmname}}       
+              //- small.d-block.text-right.mt-3
                 //- a(href='#') All updates
             .my-3.p-3.bg-white.rounded.shadow-sm
               h6.border-bottom.border-gray.pb-2.mb-0 More info  
@@ -104,3 +109,5 @@ block content
               //- p.text-muted This report will be cached for performance in future requests **       
               small.d-block.text-right.mt-3
                 a(href='#') Know more
+              script.
+                function onSubmit(e){document.getElementById('recaptcha-').value = e;console.log('catcha id', e)}

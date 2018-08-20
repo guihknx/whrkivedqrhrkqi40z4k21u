@@ -4,9 +4,8 @@ angular
 
 function MainCtrl ($scope, $http, $location, DataTransponder) {
 
-	var formatId = function(stdIn){
-		var stdIn = "";
-		stdIn = stdIn || $scope.searchQuery;
+	function formatId(stdIn){
+;
 		if( stdIn ){
 			stdIn = stdIn.replace( /\D/g , ""); 
 			stdIn = stdIn.replace( /(\d{3})(\d)/ , "$1.$2");
@@ -16,15 +15,29 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 		return stdIn;
 	};
 
-	$scope.$watch('searchField', function(value){
+	function k(value){
+grecaptcha.execute();
+		var onSubmitF = function(e){
+			console.log(e);
+		   $scope.cap = e;
+		   k(value)
+		};
 
+		window.onSubmitF = onSubmitF;
+
+
+		console.log('USER', $scope.cap)
 		if( value == undefined ) return;
+		if( !$scope.cap ) return;
+
+		console.log('shoudl continue...', $scope.cap,  $scope.searchQuery)
+
 		
 			var pattern = /^\d{3}.\d{3}.\d{3}-\d{2}$/i;
 		$scope.searchQuery = value;   
 		$scope.displayHelp = false;
 
-		$scope.searchQuery = formatId(value)
+		$scope.searchQuery = formatId($scope.searchField)
 		$scope.dataInfo = [];
 		$scope.timex = new Date();
 
@@ -35,8 +48,9 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 			return false;
 
 		}else{
+			
 			$scope.showLoading = true;
-			DataTransponder.fetch($scope.searchQuery).then(function(data) { 
+			DataTransponder.fetch($scope.searchQuery, $scope.cap).then(function(data) { 
 				$scope.showLoading = false;
 				if( data.error ){
 					$scope.displayHelp = true;
@@ -57,14 +71,15 @@ function MainCtrl ($scope, $http, $location, DataTransponder) {
 				$log.error('failure loading', errorPayload);
 			});
 
-		}
-	})
+		}		
+	}
+	$scope.$watchGroup(['searchField', 'cap'],k)
 	
 	$scope.$watch('plateField', function(value){
 		$scope.timex = new Date();
 
 		if( value == undefined ) return;
-		
+			grecaptcha.execute();
 			$scope.showLoading = true;
 			DataTransponder.fetchPlate($scope.plateField).then(function(data) { 
 				$scope.showLoading = false;
